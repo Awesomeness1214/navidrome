@@ -37,6 +37,7 @@ import { SongListActions } from './SongListActions'
 import { AlbumLinkField } from './AlbumLinkField'
 import { SongBulkActions, QualityInfo, useSelectedFields } from '../common'
 import config from '../config'
+import { InfiniteScroll } from '../common/InfiniteScroll' // CUSTOM
 import ExpandInfoDialog from '../dialogs/ExpandInfoDialog'
 
 const useStyles = makeStyles({
@@ -222,6 +223,7 @@ const SongList = (props) => {
           defaultRowsPerPageOptions,
           isXsmall ? 50 : 15,
         )}
+        pagination={<InfiniteScroll />} // CUSTOM: endless scroll
       >
         {isXsmall ? (
           <SongSimpleList />

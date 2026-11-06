@@ -32,6 +32,8 @@ import {
 import config from '../config'
 import ArtistListActions from './ArtistListActions'
 import ArtistSimpleList from './ArtistSimpleList'
+import ArtistGridView from './ArtistGridView' // CUSTOM
+import { InfiniteScroll } from '../common/InfiniteScroll' // CUSTOM
 import { DraggableTypes } from '../consts'
 import en from '../i18n/en.json'
 import { formatBytes } from '../utils/index.js'
@@ -126,7 +128,14 @@ const ArtistDatagrid = (props) => (
   <Datagrid {...props} body={<ArtistDatagridBody />} />
 )
 
-const ArtistListView = ({ hasShow, hasEdit, hasList, width, ...rest }) => {
+// Original list/table view, kept here in case you want it back.
+export const ArtistListView = ({
+  hasShow,
+  hasEdit,
+  hasList,
+  width,
+  ...rest
+}) => {
   const { filterValues } = rest
   const classes = useStyles()
   const handleArtistLink = useGetHandleArtistClick(width)
@@ -216,8 +225,11 @@ const ArtistList = (props) => {
         filters={<ArtistFilter />}
         filterDefaultValues={{ role: 'albumartist' }}
         actions={<ArtistListActions />}
+        perPage={36} // CUSTOM: first batch size
+        pagination={<InfiniteScroll />} // CUSTOM: endless scroll
       >
-        <ArtistListView {...props} />
+        {/* CUSTOM: photo grid instead of the table */}
+        <ArtistGridView />
       </List>
     </>
   )

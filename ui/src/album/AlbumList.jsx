@@ -20,7 +20,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import { withWidth } from '@material-ui/core'
 import {
   List,
-  Pagination,
   Title,
   useAlbumsPerPage,
   useResourceRefresh,
@@ -30,6 +29,7 @@ import {
 import AlbumListActions from './AlbumListActions'
 import AlbumTableView from './AlbumTableView'
 import AlbumGridView from './AlbumGridView'
+import { InfiniteScroll } from '../common/InfiniteScroll' // CUSTOM
 import { useRollChanged } from './useRollChanged'
 import albumLists from './albumLists'
 import {
@@ -188,13 +188,13 @@ const AlbumListTitle = ({ albumListType }) => {
   return <Title subTitle={title} args={{ smart_count: 2 }} />
 }
 
-const AlbumListPagination = ({ albumListType, seed, shownSeed, ...rest }) => {
+const AlbumListPagination = ({ albumListType, seed, shownSeed }) => {
   const { loading } = useListContext()
   const rerolling = useRollChanged(shownSeed, seed, loading)
   if (rerolling && albumListType === 'random') {
     return null
   }
-  return <Pagination {...rest} />
+  return <InfiniteScroll /> // CUSTOM: endless scroll (was <Pagination />)
 }
 
 const randomStartingSeed = Math.random().toString()
